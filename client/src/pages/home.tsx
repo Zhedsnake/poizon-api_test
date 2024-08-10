@@ -31,7 +31,7 @@ const Home: React.FC = () => {
 
     useEffect(() => {
         const randomWords: string[] = getRandomWords();
-        setGeneratedWords(randomWords);
+        setGeneratedWords([...randomWords, '']);
     }, []);
 
     useEffect(() => {
@@ -56,23 +56,22 @@ const Home: React.FC = () => {
     }, [done]);
 
     return (
-        <div>
-            <h1>Тест на скорость печати</h1>
+        <div className="container mt-4">
+            <h1 className="mb-4 text-center">Тест на скорость печати</h1>
             {done && (
-                <div>
+                <div className="alert alert-success mb-4">
                     Вы закончили проверку! Время: {elapsedTime.toFixed(2)} секунд. Скорость печати: {wpm.toFixed(2)} слов в минуту. Ошибки: {errorCount}
                 </div>
             )}
-            <div>
+            <div className="mb-4">
                 <HighlightedText inputWordsArray={inputWordsArray} generatedWords={generatedWords} setErrorCount={setErrorCount} />
             </div>
-            <br />
             <input
                 type="text"
                 value={inputValue}
                 onChange={handleInputChange}
-                placeholder="Start typing here..."
-                style={{ width: '50%', marginTop: '10px' }}
+                placeholder="Начните печатать здесь..."
+                className="form-control"
                 disabled={done}
             />
         </div>

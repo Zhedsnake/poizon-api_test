@@ -28,7 +28,9 @@ const HighlightedText: React.FC<HighlightedTextProps> = ({ inputWordsArray, gene
                             key={j}
                             style={{
                                 backgroundColor,
-                                color: 'black'
+                                color: 'black',
+                                padding: '2px',
+                                borderRadius: '3px'
                             }}
                         >
                             {char}

@@ -1,0 +1,10 @@
+version: "1"
+services:
+  client:
+    build: client
+    ports:
+      - "4000:3000"
+    volumes:
+      - ./client/src:/app/client/src
+    container_name: poizon-api_test-client-dev
+    command: ["npm", "run", "dev"]

@@ -55,16 +55,34 @@ const Home: React.FC = () => {
         setWpm(wordsCount / timeInMinutes);
     }, [done]);
 
+    useEffect(() => {
+        let count = 0;
+        generatedWords.map((wordFromState, i) => {
+            const wordFromInput = inputWordsArray[i] || '';
+
+            wordFromState.split('').map((char, j) => {
+                const backgroundColor =
+                    wordFromInput[j] === char ? 'lightgreen' :
+                        wordFromInput[j] ? 'lightcoral' : 'transparent';
+
+                if (backgroundColor === 'lightcoral') {
+                    count++;
+                }
+            });
+        });
+        setErrorCount(count);
+    }, [done]);
+
     return (
-        <div className="container mt-4">
-            <h1 className="mb-4 text-center">Тест на скорость печати</h1>
+        <div className="container">
+            <h1 className="text-center my-4">Тест на скорость печати</h1>
             {done && (
-                <div className="alert alert-success mb-4">
+                <div className="alert alert-success">
                     Вы закончили проверку! Время: {elapsedTime.toFixed(2)} секунд. Скорость печати: {wpm.toFixed(2)} слов в минуту. Ошибки: {errorCount}
                 </div>
             )}
-            <div className="mb-4">
-                <HighlightedText inputWordsArray={inputWordsArray} generatedWords={generatedWords} setErrorCount={setErrorCount} />
+            <div className="mb-3">
+                <HighlightedText inputWordsArray={inputWordsArray} generatedWords={generatedWords} />
             </div>
             <input
                 type="text"

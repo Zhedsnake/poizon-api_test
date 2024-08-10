@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { getRandomWords } from "../utils/getRandomWords";
 import HighlightedText from "../components/HighlightedText";
 import { getElapsedTime } from "../utils/getElapsedTime";
+import {useActions} from "../hooks/useActions.ts";
+import {useTypedSelector} from "../hooks/useTypedSelector.ts";
 
 const Home: React.FC = () => {
-    const [generatedWords, setGeneratedWords] = useState<string[]>([]);
 
     const [inputValue, setInputValue] = useState<string>('');
     const [inputWordsArray, setInputWordsArray] = useState<string[]>([]);
@@ -20,6 +20,10 @@ const Home: React.FC = () => {
     const [startTimer, setStartTimer] = useState<number | null>(null);
     const [endTimer, setEndTimer] = useState<number | null>(null);
 
+
+    const {data: wordsData} = useTypedSelector(state => state.generateWords)
+    const {getWordsAction, defWordsAction} = useActions()
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
 
@@ -30,8 +34,7 @@ const Home: React.FC = () => {
     };
 
     useEffect(() => {
-        const randomWords: string[] = getRandomWords();
-        setGeneratedWords([...randomWords, '']);
+        getWordsAction()
     }, []);
 
     useEffect(() => {
@@ -39,7 +42,7 @@ const Home: React.FC = () => {
     }, [inputValue]);
 
     useEffect(() => {
-        if (generatedWords.length !== 0 && inputWordsArray.length === generatedWords.length) {
+        if (wordsData.length !== 0 && inputWordsArray.length === wordsData.length) {
             setDone(true);
 
             setEndTimer(Date.now());
@@ -50,14 +53,14 @@ const Home: React.FC = () => {
         const timeInSeconds = getElapsedTime(startTimer, endTimer);
         setElapsedTime(timeInSeconds);
 
-        const wordsCount = generatedWords.length;
+        const wordsCount = wordsData.length;
         const timeInMinutes = timeInSeconds / 60;
         setWpm(wordsCount / timeInMinutes);
     }, [done]);
 
     useEffect(() => {
         let count = 0;
-        generatedWords.map((wordFromState, i) => {
+        wordsData.map((wordFromState, i) => {
             const wordFromInput = inputWordsArray[i] || '';
 
             wordFromState.split('').map((char, j) => {
@@ -73,6 +76,12 @@ const Home: React.FC = () => {
         setErrorCount(count);
     }, [done]);
 
+    useEffect(() => {
+        return () => {
+            defWordsAction()
+        };
+    }, []);
+
     return (
         <div className="container">
             <h1 className="text-center my-4">Тест на скорость печати</h1>
@@ -82,7 +91,7 @@ const Home: React.FC = () => {
                 </div>
             )}
             <div className="mb-3">
-                <HighlightedText inputWordsArray={inputWordsArray} generatedWords={generatedWords} />
+                <HighlightedText inputWordsArray={inputWordsArray} />
             </div>
             <input
                 type="text"

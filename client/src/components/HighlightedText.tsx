@@ -1,14 +1,16 @@
 import React from 'react';
+import {useTypedSelector} from "../hooks/useTypedSelector.ts";
 
 interface HighlightedTextProps {
     inputWordsArray: string[];
-    generatedWords: string[];
 }
 
-const HighlightedText: React.FC<HighlightedTextProps> = ({ inputWordsArray, generatedWords }) => {
+const HighlightedText: React.FC<HighlightedTextProps> = ({ inputWordsArray }) => {
+    const {data: wordsData} = useTypedSelector(state => state.generateWords)
+
     return (
         <>
-            {generatedWords.map((wordFromState, i) => {
+            {wordsData.map((wordFromState, i) => {
                 const wordFromInput = inputWordsArray[i] || '';
 
                 return (
@@ -32,7 +34,7 @@ const HighlightedText: React.FC<HighlightedTextProps> = ({ inputWordsArray, gene
                                 </span>
                             );
                         })}
-                        {i < generatedWords.length - 1 && ' '}
+                        {i < wordsData.length - 1 && ' '}
                     </React.Fragment>
                 );
             })}

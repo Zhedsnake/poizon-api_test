@@ -2,16 +2,27 @@
 import React, { useEffect, useState } from 'react';
 import { getRandomWords } from "../utils/getRandomWords";
 import HighlightedText from "../components/HighlightedText";
+import {getElapsedTime} from "../utils/getElapsedTime.ts";
 
 const Home: React.FC = () => {
     const [generatedWords, setGeneratedWords] = useState<string[]>([]);
+
     const [inputValue, setInputValue] = useState<string>('');
     const [inputWordsArray, setInputWordsArray] = useState<string[]>([]);
+
     const [done, setDone] = useState<boolean>(false);
 
-    // Обработчик изменения текста в input
+    const [startedTimer, setStartedTimer] = useState<boolean>(false)
+    const [startTimer, setStartTimer] = useState<number | null>(null);
+    const [endTimer, setEndTimer] = useState<number | null>(null);
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
+
+        if (!startedTimer) {
+            setStartTimer(Date.now());
+            setStartedTimer(true)
+        }
     };
 
     useEffect(() => {
@@ -24,17 +35,22 @@ const Home: React.FC = () => {
     }, [inputValue]);
 
     useEffect(() => {
-        if (inputWordsArray.length === generatedWords.length) {
+        if (generatedWords.length !==0 && inputWordsArray.length === generatedWords.length) {
             setDone(true);
-        } else {
-            setDone(false);
+
+            setEndTimer(Date.now());
         }
     }, [inputWordsArray]);
+
 
     return (
         <div>
             <h1>Тест на скорость печати</h1>
-            {done && <div>Вы закончили проверку</div>}
+            {done && (
+                <div>
+                    Вы закончили проверку Время: {getElapsedTime(startTimer, endTimer)} секунд.
+                </div>
+            )}
             <div>
                 <HighlightedText inputWordsArray={inputWordsArray} generatedWords={generatedWords} />
             </div>

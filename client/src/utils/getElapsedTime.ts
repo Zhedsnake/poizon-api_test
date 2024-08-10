@@ -1,8 +1,7 @@
-// src/utils/timeUtils.ts
 
-export const getElapsedTime = (startTimer: number | null, endTimer: number | null): string => {
+export const getElapsedTime = (startTimer: number | null, endTimer: number | null): number => {
     if (startTimer && endTimer) {
-        return ((endTimer - startTimer) / 1000).toFixed(2); // Возвращает время в секундах
+        return (endTimer - startTimer) / 1000;
     }
-    return 'N/A';
+    return 0;
 };

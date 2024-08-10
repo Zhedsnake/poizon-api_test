@@ -1,8 +1,7 @@
-// src/pages/Home.tsx
 import React, { useEffect, useState } from 'react';
 import { getRandomWords } from "../utils/getRandomWords";
 import HighlightedText from "../components/HighlightedText";
-import {getElapsedTime} from "../utils/getElapsedTime.ts";
+import { getElapsedTime } from "../utils/getElapsedTime";
 
 const Home: React.FC = () => {
     const [generatedWords, setGeneratedWords] = useState<string[]>([]);
@@ -12,7 +11,10 @@ const Home: React.FC = () => {
 
     const [done, setDone] = useState<boolean>(false);
 
-    const [startedTimer, setStartedTimer] = useState<boolean>(false)
+    const [wpm, setWpm] = useState<number>(0);
+
+    const [elapsedTime, setElapsedTime] = useState<number>(0);
+    const [startedTimer, setStartedTimer] = useState<boolean>(false);
     const [startTimer, setStartTimer] = useState<number | null>(null);
     const [endTimer, setEndTimer] = useState<number | null>(null);
 
@@ -21,7 +23,7 @@ const Home: React.FC = () => {
 
         if (!startedTimer) {
             setStartTimer(Date.now());
-            setStartedTimer(true)
+            setStartedTimer(true);
         }
     };
 
@@ -35,20 +37,28 @@ const Home: React.FC = () => {
     }, [inputValue]);
 
     useEffect(() => {
-        if (generatedWords.length !==0 && inputWordsArray.length === generatedWords.length) {
+        if (generatedWords.length !== 0 && inputWordsArray.length === generatedWords.length) {
             setDone(true);
 
             setEndTimer(Date.now());
         }
     }, [inputWordsArray]);
 
+    useEffect(() => {
+        const timeInSeconds = getElapsedTime(startTimer, endTimer);
+        setElapsedTime(timeInSeconds);
+
+        const wordsCount = generatedWords.length;
+        const timeInMinutes = timeInSeconds / 60;
+        setWpm(wordsCount / timeInMinutes);
+    }, [done]);
 
     return (
         <div>
             <h1>Тест на скорость печати</h1>
             {done && (
                 <div>
-                    Вы закончили проверку Время: {getElapsedTime(startTimer, endTimer)} секунд.
+                    Вы закончили проверку! Время: {elapsedTime.toFixed(2)} секунд. Скорость печати: {wpm.toFixed(2)} слов в минуту.
                 </div>
             )}
             <div>

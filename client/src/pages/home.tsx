@@ -13,6 +13,8 @@ const Home: React.FC = () => {
 
     const [wpm, setWpm] = useState<number>(0);
 
+    const [errorCount, setErrorCount] = useState<number>(0);
+
     const [elapsedTime, setElapsedTime] = useState<number>(0);
     const [startedTimer, setStartedTimer] = useState<boolean>(false);
     const [startTimer, setStartTimer] = useState<number | null>(null);
@@ -58,11 +60,11 @@ const Home: React.FC = () => {
             <h1>Тест на скорость печати</h1>
             {done && (
                 <div>
-                    Вы закончили проверку! Время: {elapsedTime.toFixed(2)} секунд. Скорость печати: {wpm.toFixed(2)} слов в минуту.
+                    Вы закончили проверку! Время: {elapsedTime.toFixed(2)} секунд. Скорость печати: {wpm.toFixed(2)} слов в минуту. Ошибки: {errorCount}
                 </div>
             )}
             <div>
-                <HighlightedText inputWordsArray={inputWordsArray} generatedWords={generatedWords} />
+                <HighlightedText inputWordsArray={inputWordsArray} generatedWords={generatedWords} setErrorCount={setErrorCount} />
             </div>
             <br />
             <input

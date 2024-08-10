@@ -1,12 +1,11 @@
 import React from 'react';
 
 interface HighlightedTextProps {
-    inputValue: string;
+    inputWordsArray: string[];
     generatedWords: string[];
 }
 
-const HighlightedText: React.FC<HighlightedTextProps> = ({ inputValue, generatedWords }) => {
-    const inputWordsArray: string[] = inputValue.trim().split(' ');
+const HighlightedText: React.FC<HighlightedTextProps> = ({ inputWordsArray, generatedWords }) => {
 
     return (
         <>

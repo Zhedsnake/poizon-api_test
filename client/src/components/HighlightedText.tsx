@@ -15,17 +15,23 @@ const HighlightedText: React.FC<HighlightedTextProps> = ({ inputValue, generated
 
                 return (
                     <React.Fragment key={i}>
-                        {wordFromState.split('').map((char, j) => (
-                            <span
-                                key={j}
-                                style={{
-                                    backgroundColor: wordFromInput[j] && wordFromInput[j] !== char ? 'red' : 'transparent',
-                                    color: 'black'
-                                }}
-                            >
-                                {char}
-                            </span>
-                        ))}
+                        {wordFromState.split('').map((char, j) => {
+                            const backgroundColor =
+                                wordFromInput[j] === char ? 'lightgreen' :
+                                    wordFromInput[j] ? 'lightcoral' : 'transparent';
+
+                            return (
+                                <span
+                                    key={j}
+                                    style={{
+                                        backgroundColor,
+                                        color: 'black'
+                                    }}
+                                >
+                                    {char}
+                                </span>
+                            );
+                        })}
                         {i < generatedWords.length - 1 && ' '}
                     </React.Fragment>
                 );

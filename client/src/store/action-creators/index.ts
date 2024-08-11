@@ -1,15 +1,15 @@
-import {getWordsAction} from "./generateWords/getWords.ts";
-import {defWordsAction} from "./generateWords/defWords.ts";
+import {getWordsAction} from "./generateWords/getWordsAction.ts";
+import {defWordsAction} from "./generateWords/defWordsAction.ts";
 import {inputWordsArrayAction} from "./inputWordsArray/inputWordsArrayAction.ts";
 import {defInputWordsArrayAction} from "./inputWordsArray/defInputWordsArrayAction.ts";
-import {getElapsedTimeTest} from "./elapsedTime/getElapsedTimeTest.ts";
-import {defElapsedTimeTest} from "./elapsedTime/defElapsedTimeTest.ts";
+import {getElapsedTimeTestAction} from "./elapsedTime/getElapsedTimeTestAction.ts";
+import {defElapsedTimeTestAction} from "./elapsedTime/defElapsedTimeTestAction.ts";
 
 export default {
     getWordsAction,
     defWordsAction,
     inputWordsArrayAction,
     defInputWordsArrayAction,
-    getElapsedTimeTest,
-    defElapsedTimeTest
+    getElapsedTimeTestAction,
+    defElapsedTimeTestAction
 }

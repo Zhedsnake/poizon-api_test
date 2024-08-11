@@ -7,6 +7,7 @@ import InputWords from "../components/InputWords.tsx";
 import Results from "../components/Results.tsx";
 import {getPossibleCharsLengths} from "../utils/getPossibleCharsLengths.ts";
 
+
 const Home: React.FC = () => {
     const {
         done,
@@ -30,9 +31,9 @@ const Home: React.FC = () => {
     const {
         getWordsAction,
         defWordsAction,
-        defElapsedTimeTest,
+        defElapsedTimeTestAction,
         defInputWordsArrayAction,
-        getElapsedTimeTest
+        getElapsedTimeTestAction
     } = useActions();
 
     // Получает максимальное количество вводимых символов
@@ -54,7 +55,7 @@ const Home: React.FC = () => {
     // Эффект на подсчёт времени тестирования
     useEffect(() => {
         if (startTimer && endTimer) {
-            getElapsedTimeTest(startTimer, endTimer);
+            getElapsedTimeTestAction(startTimer, endTimer);
         }
     }, [done]);
 
@@ -102,7 +103,7 @@ const Home: React.FC = () => {
             setStartedTimer(false);
             setStartTimer(null);
             setEndTimer(null);
-            defElapsedTimeTest();
+            defElapsedTimeTestAction();
         };
     }, []);
 

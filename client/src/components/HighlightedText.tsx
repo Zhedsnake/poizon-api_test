@@ -16,7 +16,7 @@ const HighlightedText: React.FC = () => {
                     <React.Fragment key={i}>
                         {wordFromState.split('').map((char, j) => {
                             const backgroundColor =
-                                wordFromInput[j] === char ? 'lightgreen' :
+                                wordFromInput[j] === char ? '#038723' :
                                     wordFromInput[j] ? 'lightcoral' : 'transparent';
 
                             return (
@@ -28,6 +28,7 @@ const HighlightedText: React.FC = () => {
                                         padding: '1px',
                                         borderRadius: '3px'
                                     }}
+                                    className={"fw-bold text-white  navbar-brand"}
                                 >
                                     {char}
                                 </span>

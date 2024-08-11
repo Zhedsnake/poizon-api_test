@@ -10,7 +10,8 @@ import store from "./store";
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-
+// css
+import './css/body-backgrount.css';
 
 const App: React.FC = () => {
     const [done, setDone] = useState<boolean>(false);

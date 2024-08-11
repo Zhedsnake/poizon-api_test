@@ -10,40 +10,39 @@ const Home: React.FC = () => {
     const {
         done,
         setDone,
-
         setWpm,
-
         setErrorCount,
-
         startTimer,
         endTimer,
         setEndTimer,
     } = useContext(TestContext);
 
-
-    const {data: wordsData} = useTypedSelector(state => state.generateWords)
-    const {data: inputWordsData} = useTypedSelector(state => state.inputWordsArray)
-    const {data: timeSecondData} = useTypedSelector(state => state.elapsedTime)
-    const {getWordsAction, defWordsAction, defInputWordsArrayAction, getElapsedTimeTest} = useActions()
-
+    const {data: wordsData} = useTypedSelector(state => state.generateWords);
+    const {data: inputWordsData} = useTypedSelector(state => state.inputWordsArray);
+    const {data: timeSecondData} = useTypedSelector(state => state.elapsedTime);
+    const {getWordsAction, defWordsAction, defInputWordsArrayAction, getElapsedTimeTest} = useActions();
 
     // Эффект на конец тестирования
     useEffect(() => {
         if (wordsData.length !== 0 && inputWordsData.length === wordsData.length) {
-            setDone(true);
+            const lastWordState = wordsData[wordsData.length - 1];
+            console.log(lastWordState);
+            const lastWordInput = inputWordsData[inputWordsData.length - 1];
+            console.log(lastWordInput);
 
-            setEndTimer(Date.now());
+            if (lastWordInput.length === lastWordState.length) {
+                setDone(true);
+                setEndTimer(Date.now());
+            }
         }
     }, [inputWordsData]);
-
 
     // Эффект на подсчёт времени тестирования
     useEffect(() => {
         if (startTimer && endTimer) {
-            getElapsedTimeTest(startTimer, endTimer)
+            getElapsedTimeTest(startTimer, endTimer);
         }
     }, [done]);
-
 
     // Эффект на подсчёт слов в минуту тестирования
     useEffect(() => {
@@ -51,7 +50,6 @@ const Home: React.FC = () => {
         const timeInMinutes = timeSecondData / 60;
         setWpm(wordsCount / timeInMinutes);
     }, [timeSecondData]);
-
 
     // Эффект на подсчёт ошибок
     useEffect(() => {
@@ -70,24 +68,22 @@ const Home: React.FC = () => {
         setErrorCount(count);
     }, [done]);
 
-
     useEffect(() => {
-        getWordsAction()
+        getWordsAction();
 
         return () => {
-            defWordsAction()
-            defInputWordsArrayAction()
+            defWordsAction();
+            defInputWordsArrayAction();
         };
     }, []);
-
 
     return (
         <div className="container">
             <h1 className="text-center my-4">Тест на скорость печати</h1>
             {done && (
-                <Results/>
+                <Results />
             )}
-            <HighlightedText/>
+            <HighlightedText />
             <InputWords
                 placeholder="Начните печатать здесь..."
                 className="form-control"

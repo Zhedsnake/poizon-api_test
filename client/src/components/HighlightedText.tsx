@@ -25,7 +25,7 @@ const HighlightedText: React.FC = () => {
                                     style={{
                                         backgroundColor,
                                         color: 'black',
-                                        padding: '2px',
+                                        padding: '1px',
                                         borderRadius: '3px'
                                     }}
                                 >

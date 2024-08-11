@@ -36,7 +36,7 @@ const InputWords: React.FC<InputWordsProps> = (props) => {
         <div className="bg-secondary m-0 p-0 row">
             <textarea
                 className="form-control bg-light fw-bold"
-                rows="3"
+                rows="5"
                 placeholder="Начните печатать здесь..."
                 value={inputValue}
                 onChange={handleInputChange}

@@ -15,12 +15,15 @@ const Home: React.FC = () => {
         startTimer,
         endTimer,
         setEndTimer,
+        setInputValue,
+        setStartedTimer,
+        setStartTimer,
     } = useContext(TestContext);
 
     const {data: wordsData} = useTypedSelector(state => state.generateWords);
     const {data: inputWordsData} = useTypedSelector(state => state.inputWordsArray);
     const {data: timeSecondData} = useTypedSelector(state => state.elapsedTime);
-    const {getWordsAction, defWordsAction, defInputWordsArrayAction, getElapsedTimeTest} = useActions();
+    const {getWordsAction, defWordsAction, defElapsedTimeTest, defInputWordsArrayAction, getElapsedTimeTest} = useActions();
 
     // Эффект на конец тестирования
     useEffect(() => {
@@ -77,6 +80,17 @@ const Home: React.FC = () => {
         return () => {
             defWordsAction();
             defInputWordsArrayAction();
+
+            setDone(false);
+
+            setInputValue("");
+
+            setErrorCount(0);
+
+            setStartedTimer(false);
+            setStartTimer(null);
+            setEndTimer(null);
+            defElapsedTimeTest();
         };
     }, []);
 

@@ -19,5 +19,24 @@ export interface TestContextType {
     setPossibleChars: Dispatch<SetStateAction<number>>;
 }
 
+const initialContextValue: TestContextType = {
+    done: false,
+    setDone: () => {},
+    inputValue: '',
+    setInputValue: () => {},
+    startedTimer: false,
+    setStartedTimer: () => {},
+    startTimer: null,
+    setStartTimer: () => {},
+    wpm: 0,
+    setWpm: () => {},
+    errorCount: 0,
+    setErrorCount: () => {},
+    endTimer: null,
+    setEndTimer: () => {},
+    possibleChars: 0,
+    setPossibleChars: () => {},
+};
 
-export const TestContext = createContext<TestContextType>();
+
+export const TestContext = createContext<TestContextType>(initialContextValue);

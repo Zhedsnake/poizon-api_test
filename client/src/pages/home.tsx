@@ -1,34 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import HighlightedText from "../components/HighlightedText";
 import { getElapsedTime } from "../utils/getElapsedTime";
 import {useActions} from "../hooks/useActions.ts";
 import {useTypedSelector} from "../hooks/useTypedSelector.ts";
+import {TestContext} from "../context";
 
 const Home: React.FC = () => {
+    const {done, setDone} = useContext(TestContext);
 
     const [inputValue, setInputValue] = useState<string>('');
-
-    const [done, setDone] = useState<boolean>(false);
 
     const [wpm, setWpm] = useState<number>(0);
 
     const [errorCount, setErrorCount] = useState<number>(0);
 
-    const [elapsedTime, setElapsedTime] = useState<number>(0);
     const [startedTimer, setStartedTimer] = useState<boolean>(false);
     const [startTimer, setStartTimer] = useState<number | null>(null);
     const [endTimer, setEndTimer] = useState<number | null>(null);
+    const [elapsedTime, setElapsedTime] = useState<number>(0);
 
 
     const {data: wordsData} = useTypedSelector(state => state.generateWords)
     const {data: inputWordsData} = useTypedSelector(state => state.inputWordsArray)
     const {getWordsAction, defWordsAction, inputWordsAction, defInputWordsAction} = useActions()
 
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
 
         if (!startedTimer) {
             setStartTimer(Date.now());
+
             setStartedTimer(true);
         }
     };

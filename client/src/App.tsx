@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import AppRouter from "./components/AppRouter";
+import { TestContext } from "./context";
 
 
 //Redux
@@ -13,10 +14,16 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 
 const App: React.FC = () => {
+    const [done, setDone] = useState<boolean>(false);
 
     return (
         <Provider store={store}>
-            <AppRouter/>
+            <TestContext.Provider value ={{
+                done,
+                setDone
+            }}>
+                <AppRouter/>
+            </TestContext.Provider>
         </Provider>
     )
 }

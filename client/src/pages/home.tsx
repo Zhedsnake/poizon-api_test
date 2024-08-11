@@ -1,46 +1,33 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import HighlightedText from "../components/HighlightedText";
-import { getElapsedTime } from "../utils/getElapsedTime";
 import {useActions} from "../hooks/useActions.ts";
 import {useTypedSelector} from "../hooks/useTypedSelector.ts";
 import {TestContext} from "../context";
+import InputWords from "../components/InputWords.tsx";
+import Results from "../components/Results.tsx";
 
 const Home: React.FC = () => {
-    const {done, setDone} = useContext(TestContext);
+    const {
+        done,
+        setDone,
 
-    const [inputValue, setInputValue] = useState<string>('');
+        setWpm,
 
-    const [wpm, setWpm] = useState<number>(0);
+        setErrorCount,
 
-    const [errorCount, setErrorCount] = useState<number>(0);
-
-    const [startedTimer, setStartedTimer] = useState<boolean>(false);
-    const [startTimer, setStartTimer] = useState<number | null>(null);
-    const [endTimer, setEndTimer] = useState<number | null>(null);
-    const [elapsedTime, setElapsedTime] = useState<number>(0);
+        startTimer,
+        endTimer,
+        setEndTimer,
+    } = useContext(TestContext);
 
 
     const {data: wordsData} = useTypedSelector(state => state.generateWords)
     const {data: inputWordsData} = useTypedSelector(state => state.inputWordsArray)
-    const {getWordsAction, defWordsAction, inputWordsAction, defInputWordsAction} = useActions()
+    const {data: timeSecondData} = useTypedSelector(state => state.elapsedTime)
+    const {getWordsAction, defWordsAction, defInputWordsAction, getElapsedTimeTest} = useActions()
 
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(e.target.value);
-
-        if (!startedTimer) {
-            setStartTimer(Date.now());
-
-            setStartedTimer(true);
-        }
-    };
-
-
-    useEffect(() => {
-        inputWordsAction(inputValue.trim().split(' '));
-    }, [inputValue]);
-
-
+    // Эффект на конец тестирования
     useEffect(() => {
         if (wordsData.length !== 0 && inputWordsData.length === wordsData.length) {
             setDone(true);
@@ -50,32 +37,36 @@ const Home: React.FC = () => {
     }, [inputWordsData]);
 
 
+    // Эффект на подсчёт слов в минуту тестирования
     useEffect(() => {
-        const timeInSeconds = getElapsedTime(startTimer, endTimer);
-        setElapsedTime(timeInSeconds);
-
         const wordsCount = wordsData.length;
-        const timeInMinutes = timeInSeconds / 60;
+        const timeInMinutes = timeSecondData / 60;
         setWpm(wordsCount / timeInMinutes);
+    }, [timeSecondData]);
+
+
+    // Эффект на подсчёт времени тестирования
+    useEffect(() => {
+        if (startTimer && endTimer) {
+            getElapsedTimeTest(startTimer, endTimer)
+        }
     }, [done]);
 
 
+    // Эффект на подсчёт ошибок
     useEffect(() => {
         let count = 0;
 
-        wordsData.map((wordFromState, i) => {
+        wordsData.forEach((wordFromState, i) => {
             const wordFromInput = inputWordsData[i] || '';
 
-            wordFromState.split('').map((char, j) => {
-                const backgroundColor =
-                    wordFromInput[j] === char ? 'lightgreen' :
-                        wordFromInput[j] ? 'lightcoral' : 'transparent';
-
-                if (backgroundColor === 'lightcoral') {
+            wordFromState.split('').forEach((char, j) => {
+                if (wordFromInput[j] && wordFromInput[j] !== char) {
                     count++;
                 }
             });
         });
+
         setErrorCount(count);
     }, [done]);
 
@@ -94,20 +85,12 @@ const Home: React.FC = () => {
         <div className="container">
             <h1 className="text-center my-4">Тест на скорость печати</h1>
             {done && (
-                <div className="alert alert-success">
-                    Вы закончили проверку! Время: {elapsedTime.toFixed(2)} секунд. Скорость печати: {wpm.toFixed(2)} слов в минуту. Ошибки: {errorCount}
-                </div>
+                <Results/>
             )}
-            <div className="mb-3">
-                <HighlightedText />
-            </div>
-            <input
-                type="text"
-                value={inputValue}
-                onChange={handleInputChange}
+            <HighlightedText/>
+            <InputWords
                 placeholder="Начните печатать здесь..."
                 className="form-control"
-                disabled={done}
             />
         </div>
     );

@@ -6,8 +6,9 @@ const HighlightedText: React.FC = () => {
     const {data: wordsData} = useTypedSelector(state => state.generateWords)
     const {data: inputWordsData} = useTypedSelector(state => state.inputWordsArray)
 
+
     return (
-        <>
+        <div className="mb-3">
             {wordsData.map((wordFromState, i) => {
                 const wordFromInput = inputWordsData[i] || '';
 
@@ -36,7 +37,7 @@ const HighlightedText: React.FC = () => {
                     </React.Fragment>
                 );
             })}
-        </>
+        </div>
     );
 };
 

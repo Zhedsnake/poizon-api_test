@@ -13,8 +13,10 @@ const Results: React.FC = () => {
 
     return (
         <div className="alert alert-success">
-            Вы закончили проверку! Время: {timeSecondData.toFixed(2)} секунд. Скорость печати: {wpm.toFixed(2)} слов в
-            минуту. Ошибки: {errorCount}
+            Вы закончили проверку!
+            Время: {timeSecondData.toFixed(2)} секунд.
+            Скорость печати: {wpm.toFixed(2)} слов в минуту.
+            Ошибки: {errorCount}
         </div>
     );
 };

@@ -17,7 +17,7 @@ const InputWords: React.FC<InputWordsProps> = (props) => {
         setStartTimer
     } = useContext(TestContext);
 
-    const { inputWordsAction } = useActions()
+    const { inputWordsArrayAction } = useActions()
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
@@ -30,7 +30,7 @@ const InputWords: React.FC<InputWordsProps> = (props) => {
     };
 
     useEffect(() => {
-        inputWordsAction(inputValue.trim().split(' '));
+        inputWordsArrayAction(inputValue);
     }, [inputValue]);
 
     return (

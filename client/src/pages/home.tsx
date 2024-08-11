@@ -60,26 +60,30 @@ const Home: React.FC = () => {
 
     // Эффект на подсчёт слов в минуту тестирования
     useEffect(() => {
-        const wordsCount = wordsData.length;
-        const timeInMinutes = timeSecondData / 60;
-        setWpm(wordsCount / timeInMinutes);
+        if (timeSecondData){
+            const wordsCount = wordsData.length;
+            const timeInMinutes = timeSecondData / 60;
+            setWpm(wordsCount / timeInMinutes);
+        }
     }, [timeSecondData]);
 
     // Эффект на подсчёт ошибок
     useEffect(() => {
-        let count = 0;
+        if (startTimer && endTimer) {
+            let count = 0;
 
-        wordsData.forEach((wordFromState, i) => {
-            const wordFromInput = inputWordsData[i] || '';
+            wordsData.forEach((wordFromState, i) => {
+                const wordFromInput = inputWordsData[i] || '';
 
-            wordFromState.split('').forEach((char, j) => {
-                if (wordFromInput[j] && wordFromInput[j] !== char) {
-                    count++;
-                }
+                wordFromState.split('').forEach((char, j) => {
+                    if (wordFromInput[j] && wordFromInput[j] !== char) {
+                        count++;
+                    }
+                });
             });
-        });
 
-        setErrorCount(count);
+            setErrorCount(count);
+        }
     }, [done]);
 
     useEffect(() => {

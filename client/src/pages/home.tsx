@@ -26,9 +26,7 @@ const Home: React.FC = () => {
     useEffect(() => {
         if (wordsData.length !== 0 && inputWordsData.length === wordsData.length) {
             const lastWordState = wordsData[wordsData.length - 1];
-            console.log(lastWordState);
             const lastWordInput = inputWordsData[inputWordsData.length - 1];
-            console.log(lastWordInput);
 
             if (lastWordInput.length === lastWordState.length) {
                 setDone(true);

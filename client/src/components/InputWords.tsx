@@ -4,7 +4,7 @@ import {useActions} from "../hooks/useActions.ts";
 
 interface InputWordsProps {
     placeholder: string
-};
+}
 
 const InputWords: React.FC<InputWordsProps> = (props) => {
     const {
@@ -13,7 +13,8 @@ const InputWords: React.FC<InputWordsProps> = (props) => {
         setInputValue,
         startedTimer,
         setStartedTimer,
-        setStartTimer
+        setStartTimer,
+        possibleChars
     } = useContext(TestContext);
 
     const { inputWordsArrayAction } = useActions()
@@ -40,6 +41,7 @@ const InputWords: React.FC<InputWordsProps> = (props) => {
                 placeholder="Начните печатать здесь..."
                 value={inputValue}
                 onChange={handleInputChange}
+                maxLength={possibleChars}
                 {...props}
                 disabled={done}
             ></textarea>

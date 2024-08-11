@@ -15,6 +15,8 @@ export interface TestContextType {
     setErrorCount: Dispatch<SetStateAction<number>>;
     endTimer: number | null;
     setEndTimer: Dispatch<SetStateAction<number | null>>;
+    possibleChars: number,
+    setPossibleChars: Dispatch<SetStateAction<number>>;
 }
 
 

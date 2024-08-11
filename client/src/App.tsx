@@ -17,6 +17,7 @@ const App: React.FC = () => {
     const [done, setDone] = useState<boolean>(false);
 
     const [inputValue, setInputValue] = useState<string>('');
+    const [possibleChars, setPossibleChars] = useState<number>(0)
 
     const [wpm, setWpm] = useState<number>(0);
 
@@ -43,6 +44,8 @@ const App: React.FC = () => {
                 setErrorCount,
                 endTimer,
                 setEndTimer,
+                possibleChars,
+                setPossibleChars
             }}>
                 <AppRouter/>
             </TestContext.Provider>

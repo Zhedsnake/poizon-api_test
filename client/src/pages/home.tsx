@@ -5,12 +5,16 @@ import {useTypedSelector} from "../hooks/useTypedSelector.ts";
 import {TestContext} from "../context";
 import InputWords from "../components/InputWords.tsx";
 import Results from "../components/Results.tsx";
+import {getPossibleCharsLengths} from "../utils/getPossibleCharsLengths.ts";
 
 const Home: React.FC = () => {
     const {
         done,
         setDone,
         setWpm,
+        inputValue,
+        possibleChars,
+        setPossibleChars,
         setErrorCount,
         startTimer,
         endTimer,
@@ -31,23 +35,21 @@ const Home: React.FC = () => {
         getElapsedTimeTest
     } = useActions();
 
+    // Получает максимальное количество вводимых символов
+    useEffect(() => {
+        if (wordsData && wordsData.length > 0) {
+            const charsLength: number = getPossibleCharsLengths(wordsData);
+            setPossibleChars(charsLength);
+        }
+    }, [wordsData]);
+
     // Эффект на конец тестирования
     useEffect(() => {
-        if (wordsData.length !== 0 && inputWordsData.length === wordsData.length) {
-            const lastWordState = wordsData[wordsData.length - 1];
-            const lastWordInput = inputWordsData[inputWordsData.length - 1];
-
-            if (lastWordInput.length === lastWordState.length) {
-                setDone(true);
-                setEndTimer(Date.now());
-            }
-        }
-
-        if (wordsData.length !== 0 && inputWordsData.length > wordsData.length) {
+        if (possibleChars > 0 && inputValue.length === possibleChars) {
             setDone(true);
             setEndTimer(Date.now());
         }
-    }, [inputWordsData]);
+    }, [inputValue]);
 
     // Эффект на подсчёт времени тестирования
     useEffect(() => {

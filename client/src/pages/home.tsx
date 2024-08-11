@@ -33,6 +33,11 @@ const Home: React.FC = () => {
                 setEndTimer(Date.now());
             }
         }
+
+        if (wordsData.length !== 0 && inputWordsData.length > wordsData.length) {
+            setDone(true);
+            setEndTimer(Date.now());
+        }
     }, [inputWordsData]);
 
     // Эффект на подсчёт времени тестирования

@@ -24,7 +24,7 @@ const Home: React.FC = () => {
     const {data: wordsData} = useTypedSelector(state => state.generateWords)
     const {data: inputWordsData} = useTypedSelector(state => state.inputWordsArray)
     const {data: timeSecondData} = useTypedSelector(state => state.elapsedTime)
-    const {getWordsAction, defWordsAction, defInputWordsAction, getElapsedTimeTest} = useActions()
+    const {getWordsAction, defWordsAction, defInputWordsArrayAction, getElapsedTimeTest} = useActions()
 
 
     // Эффект на конец тестирования
@@ -37,20 +37,20 @@ const Home: React.FC = () => {
     }, [inputWordsData]);
 
 
-    // Эффект на подсчёт слов в минуту тестирования
-    useEffect(() => {
-        const wordsCount = wordsData.length;
-        const timeInMinutes = timeSecondData / 60;
-        setWpm(wordsCount / timeInMinutes);
-    }, [timeSecondData]);
-
-
     // Эффект на подсчёт времени тестирования
     useEffect(() => {
         if (startTimer && endTimer) {
             getElapsedTimeTest(startTimer, endTimer)
         }
     }, [done]);
+
+
+    // Эффект на подсчёт слов в минуту тестирования
+    useEffect(() => {
+        const wordsCount = wordsData.length;
+        const timeInMinutes = timeSecondData / 60;
+        setWpm(wordsCount / timeInMinutes);
+    }, [timeSecondData]);
 
 
     // Эффект на подсчёт ошибок
@@ -76,7 +76,7 @@ const Home: React.FC = () => {
 
         return () => {
             defWordsAction()
-            defInputWordsAction()
+            defInputWordsArrayAction()
         };
     }, []);
 

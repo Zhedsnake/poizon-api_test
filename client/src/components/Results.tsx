@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
 import {TestContext} from "../context";
 import {useTypedSelector} from "../hooks/useTypedSelector.ts";
+import RestartButton from "./RestartButton.tsx";
 
 const Results: React.FC = () => {
     const {
@@ -17,6 +18,7 @@ const Results: React.FC = () => {
             Время: {timeSecondData.toFixed(2)} секунд.
             Скорость печати: {wpm.toFixed(2)} слов в минуту.
             Ошибки: {errorCount}
+            <RestartButton />
         </div>
     );
 };

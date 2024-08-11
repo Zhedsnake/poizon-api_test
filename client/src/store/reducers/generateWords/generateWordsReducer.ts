@@ -1,17 +1,20 @@
-import {GenerateWordsAction, generateWordsState, GenerateWordsStateActionTypes} from "../../../types/generateWords.ts";
+import {
+    WordsAction, WordsState,
+    WordsStateActionTypes
+} from "../../../types/generateWords.ts";
 
 
-const initialState: generateWordsState = {
+const initialState: WordsState = {
     data: []
 };
 
 
-export const generateWordsReducer = (state = initialState, action: GenerateWordsAction): generateWordsState => {
+export const generateWordsReducer = (state = initialState, action: WordsAction): WordsState => {
     switch (action.type) {
-        case GenerateWordsStateActionTypes.GET_GENERATE_WORDS_SUCCESS:
-            return { data: action.payload };
-        case GenerateWordsStateActionTypes.DEF_GENERATE_WORDS:
-            return { ...state, ...initialState };
+        case WordsStateActionTypes.GET_WORDS_SUCCESS:
+            return {data: action.payload};
+        case WordsStateActionTypes.DEF_WORDS:
+            return {...state, ...initialState};
         default:
             return state;
     }

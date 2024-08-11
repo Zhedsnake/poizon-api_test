@@ -7,7 +7,6 @@ import {useTypedSelector} from "../hooks/useTypedSelector.ts";
 const Home: React.FC = () => {
 
     const [inputValue, setInputValue] = useState<string>('');
-    const [inputWordsArray, setInputWordsArray] = useState<string[]>([]);
 
     const [done, setDone] = useState<boolean>(false);
 
@@ -22,7 +21,8 @@ const Home: React.FC = () => {
 
 
     const {data: wordsData} = useTypedSelector(state => state.generateWords)
-    const {getWordsAction, defWordsAction} = useActions()
+    const {data: inputWordsData} = useTypedSelector(state => state.inputWordsArray)
+    const {getWordsAction, defWordsAction, inputWordsAction, defInputWordsAction} = useActions()
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
@@ -33,21 +33,20 @@ const Home: React.FC = () => {
         }
     };
 
-    useEffect(() => {
-        getWordsAction()
-    }, []);
 
     useEffect(() => {
-        setInputWordsArray(inputValue.trim().split(' '));
+        inputWordsAction(inputValue.trim().split(' '));
     }, [inputValue]);
 
+
     useEffect(() => {
-        if (wordsData.length !== 0 && inputWordsArray.length === wordsData.length) {
+        if (wordsData.length !== 0 && inputWordsData.length === wordsData.length) {
             setDone(true);
 
             setEndTimer(Date.now());
         }
-    }, [inputWordsArray]);
+    }, [inputWordsData]);
+
 
     useEffect(() => {
         const timeInSeconds = getElapsedTime(startTimer, endTimer);
@@ -58,10 +57,12 @@ const Home: React.FC = () => {
         setWpm(wordsCount / timeInMinutes);
     }, [done]);
 
+
     useEffect(() => {
         let count = 0;
+
         wordsData.map((wordFromState, i) => {
-            const wordFromInput = inputWordsArray[i] || '';
+            const wordFromInput = inputWordsData[i] || '';
 
             wordFromState.split('').map((char, j) => {
                 const backgroundColor =
@@ -76,11 +77,16 @@ const Home: React.FC = () => {
         setErrorCount(count);
     }, [done]);
 
+
     useEffect(() => {
+        getWordsAction()
+
         return () => {
             defWordsAction()
+            defInputWordsAction()
         };
     }, []);
+
 
     return (
         <div className="container">
@@ -91,7 +97,7 @@ const Home: React.FC = () => {
                 </div>
             )}
             <div className="mb-3">
-                <HighlightedText inputWordsArray={inputWordsArray} />
+                <HighlightedText />
             </div>
             <input
                 type="text"

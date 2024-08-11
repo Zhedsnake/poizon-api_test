@@ -1,17 +1,17 @@
 
-export interface generateWordsState {
+export interface WordsState {
     data: string[]
 }
 
-export enum GenerateWordsStateActionTypes {
-    GET_GENERATE_WORDS_SUCCESS = 'GET_GENERATE_WORDS_SUCCESS',
-    DEF_GENERATE_WORDS='DEF_GENERATE_WORDS',
+export enum WordsStateActionTypes {
+    GET_WORDS_SUCCESS = 'GET_WORDS_SUCCESS',
+    DEF_WORDS='DEF_WORDS',
 }
-interface GetGenerateWordsSuccessAction {
-    type: GenerateWordsStateActionTypes.GET_GENERATE_WORDS_SUCCESS;
+interface WordsSuccessAction {
+    type: WordsStateActionTypes.GET_WORDS_SUCCESS;
     payload: string[];
 }
-interface CleanGenerateWordsAction {
-    type: GenerateWordsStateActionTypes.DEF_GENERATE_WORDS;
+interface CleanWordsAction {
+    type: WordsStateActionTypes.DEF_WORDS;
 }
-export type GenerateWordsAction = GetGenerateWordsSuccessAction | CleanGenerateWordsAction
+export type WordsAction = WordsSuccessAction | CleanWordsAction

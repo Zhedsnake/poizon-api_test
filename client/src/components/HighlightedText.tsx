@@ -1,17 +1,15 @@
 import React from 'react';
 import {useTypedSelector} from "../hooks/useTypedSelector.ts";
 
-interface HighlightedTextProps {
-    inputWordsArray: string[];
-}
 
-const HighlightedText: React.FC<HighlightedTextProps> = ({ inputWordsArray }) => {
+const HighlightedText: React.FC = () => {
     const {data: wordsData} = useTypedSelector(state => state.generateWords)
+    const {data: inputWordsData} = useTypedSelector(state => state.inputWordsArray)
 
     return (
         <>
             {wordsData.map((wordFromState, i) => {
-                const wordFromInput = inputWordsArray[i] || '';
+                const wordFromInput = inputWordsData[i] || '';
 
                 return (
                     <React.Fragment key={i}>

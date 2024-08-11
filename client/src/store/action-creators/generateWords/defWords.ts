@@ -1,8 +1,8 @@
 import {Dispatch} from "react";
-import {GenerateWordsAction, GenerateWordsStateActionTypes} from "../../../types/generateWords.ts";
+import {WordsAction, WordsStateActionTypes} from "../../../types/generateWords.ts";
 
 export const defWordsAction = () => {
-    return (dispatch: Dispatch<GenerateWordsAction>) => {
-        dispatch({type: GenerateWordsStateActionTypes.DEF_GENERATE_WORDS})
+    return (dispatch: Dispatch<WordsAction>) => {
+        dispatch({type: WordsStateActionTypes.DEF_WORDS})
     }
 }

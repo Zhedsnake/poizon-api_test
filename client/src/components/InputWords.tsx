@@ -4,7 +4,6 @@ import {useActions} from "../hooks/useActions.ts";
 
 interface InputWordsProps {
     placeholder: string
-    className: string
 };
 
 const InputWords: React.FC<InputWordsProps> = (props) => {
@@ -19,7 +18,7 @@ const InputWords: React.FC<InputWordsProps> = (props) => {
 
     const { inputWordsArrayAction } = useActions()
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setInputValue(e.target.value);
 
         if (!startedTimer) {
@@ -34,7 +33,17 @@ const InputWords: React.FC<InputWordsProps> = (props) => {
     }, [inputValue]);
 
     return (
-        <input value={inputValue} onChange={handleInputChange} type="text" {...props} disabled={done}/>
+        <div className="bg-secondary m-0 p-0 row">
+            <textarea
+                className="form-control bg-light fw-bold"
+                rows="3"
+                placeholder="Начните печатать здесь..."
+                value={inputValue}
+                onChange={handleInputChange}
+                {...props}
+                disabled={done}
+            ></textarea>
+        </div>
     );
 };
 

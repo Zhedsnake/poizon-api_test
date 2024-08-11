@@ -13,12 +13,22 @@ const Results: React.FC = () => {
     const {data: timeSecondData} = useTypedSelector(state => state.elapsedTime)
 
     return (
-        <div className="alert alert-success">
-            Вы закончили проверку!
-            Время: {timeSecondData.toFixed(2)} секунд.
-            Скорость печати: {wpm.toFixed(2)} слов в минуту.
-            Ошибки: {errorCount}
-            <RestartButton />
+        <div className="alert alert-success justify-content-end">
+            <div className="row">
+                <div className="col text-center fw-bold  navbar-brand">Вы закончили проверку!</div>
+            </div>
+            <div className="row">
+                <div className="col-12 fw-bold  navbar-brand">
+                    Время: {timeSecondData.toFixed(2)} секунд
+                </div>
+                <div className="col-12 fw-bold  navbar-brand">
+                    Скорость печати: {wpm.toFixed(2)} слов в минуту
+                </div>
+                <div className="col-12 fw-bold  navbar-brand">
+                    Ошибки: {errorCount}
+                </div>
+            </div>
+            <RestartButton/>
         </div>
     );
 };

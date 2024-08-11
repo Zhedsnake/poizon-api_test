@@ -23,7 +23,13 @@ const Home: React.FC = () => {
     const {data: wordsData} = useTypedSelector(state => state.generateWords);
     const {data: inputWordsData} = useTypedSelector(state => state.inputWordsArray);
     const {data: timeSecondData} = useTypedSelector(state => state.elapsedTime);
-    const {getWordsAction, defWordsAction, defElapsedTimeTest, defInputWordsArrayAction, getElapsedTimeTest} = useActions();
+    const {
+        getWordsAction,
+        defWordsAction,
+        defElapsedTimeTest,
+        defInputWordsArrayAction,
+        getElapsedTimeTest
+    } = useActions();
 
     // Эффект на конец тестирования
     useEffect(() => {
@@ -95,16 +101,30 @@ const Home: React.FC = () => {
     }, []);
 
     return (
-        <div className="container">
-            <h1 className="text-center my-4">Тест на скорость печати</h1>
-            {done && (
-                <Results />
-            )}
-            <HighlightedText />
-            <InputWords
-                placeholder="Начните печатать здесь..."
-                className="form-control"
-            />
+        <div className="container mt-5">
+            <div className="m-0 p-0 row justify-content-center">
+                <section className="col-md-6  m-0 p-0">
+                    <div className="row m-0 p-0 text-white">
+                        <h1 className="my-4 p-0 text-center fw-bold text-white  navbar-brand">Тест на скорость
+                            печати</h1>
+                    </div>
+                    {done && (
+                        <div className="m-0 p-0 row">
+                            <Results/>
+                        </div>
+                    )}
+                    <div className="row">
+                        <div className="w-100">
+                            <div className="m-0 p-0 mb-2">
+                                <HighlightedText/>
+                            </div>
+                        </div>
+                    </div>
+                    <InputWords
+                        placeholder="Начните печатать здесь..."
+                    />
+                </section>
+            </div>
         </div>
     );
 };

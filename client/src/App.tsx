@@ -20,22 +20,60 @@ import './css/body-backgrount.css';
  * @returns {React.JSX} - Возвращает корневой компонент приложения.
  */
 const App: React.FC = () => {
-    // Состояние для отслеживания конца тестирования скорости печати пользователя
+    /**
+     * Состояние для отслеживания, завершен ли тест скорости печати пользователя.
+     *
+     * @type {[boolean, React.Dispatch<React.SetStateAction<boolean>)]}
+     */
     const [done, setDone] = useState<boolean>(false);
 
-    // Состояния для вводимых строк пользователем и ограничения
+    /**
+     * Состояние для хранения введенного текста пользователем.
+     *
+     * @type {[string, React.Dispatch<React.SetStateAction<string>)]}
+     */
     const [inputValue, setInputValue] = useState<string>('');
+
+    /**
+     * Состояние для хранения количества возможных символов.
+     *
+     * @type {[number, React.Dispatch<React.SetStateAction<number>)]}
+     */
     const [possibleChars, setPossibleChars] = useState<number>(0)
 
-    // Состояние для скорости слов в минуту
+    /**
+     * Состояние для хранения скорости печати слов в минуту.
+     *
+     * @type {[number, React.Dispatch<React.SetStateAction<number>)]}
+     */
     const [wpm, setWpm] = useState<number>(0);
 
-    // Состояние количества ошибок
+    /**
+     * Состояние для хранения количества ошибок, допущенных в тесте пользователем.
+     *
+     * @type {[number, React.Dispatch<React.SetStateAction<number>)]}
+     */
     const [errorCount, setErrorCount] = useState<number>(0);
 
-    // Состояния для таймера
+    /**
+     * Состояние для отслеживания запуска таймера тестирования.
+     *
+     * @type {[boolean, React.Dispatch<React.SetStateAction<boolean>)]}
+     */
     const [startedTimer, setStartedTimer] = useState<boolean>(false);
+
+    /**
+     * Состояние для хранения времени, когда началось тестирование.
+     *
+     * @type {[number | null, React.Dispatch<React.SetStateAction<number | null>)]}
+     */
     const [startTimer, setStartTimer] = useState<number | null>(null);
+
+    /**
+     * Состояние для хранения времени, когда закончиловсь тестироване.
+     *
+     * @type {[number | null, React.Dispatch<React.SetStateAction<number | null>)]}
+     */
     const [endTimer, setEndTimer] = useState<number | null>(null);
 
     return (

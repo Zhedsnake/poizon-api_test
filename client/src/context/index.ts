@@ -1,42 +1,37 @@
-import {createContext, Dispatch, SetStateAction} from "react";
+import {createContext} from "react";
+import {TestContextType} from "../types/TestContext";
 
-export interface TestContextType {
-    done: boolean;
-    setDone: Dispatch<SetStateAction<boolean>>;
-    inputValue: string;
-    setInputValue: Dispatch<SetStateAction<string>>;
-    startedTimer: boolean;
-    setStartedTimer: Dispatch<SetStateAction<boolean>>;
-    startTimer: number | null;
-    setStartTimer: Dispatch<SetStateAction<number | null>>;
-    wpm: number;
-    setWpm: Dispatch<SetStateAction<number>>;
-    errorCount: number;
-    setErrorCount: Dispatch<SetStateAction<number>>;
-    endTimer: number | null;
-    setEndTimer: Dispatch<SetStateAction<number | null>>;
-    possibleChars: number,
-    setPossibleChars: Dispatch<SetStateAction<number>>;
-}
 
+/**
+ * Начальное значение контекста для `TestContext`.
+ * Это значение используется для инициализации контекста и должно быть заменено реальными функциями и состоянием в компоненте-обертке.
+ *
+ * @type {TestContextType}
+ */
 const initialContextValue: TestContextType = {
     done: false,
     setDone: () => {},
     inputValue: '',
     setInputValue: () => {},
-    startedTimer: false,
-    setStartedTimer: () => {},
-    startTimer: null,
-    setStartTimer: () => {},
     wpm: 0,
     setWpm: () => {},
     errorCount: 0,
     setErrorCount: () => {},
-    endTimer: null,
-    setEndTimer: () => {},
     possibleChars: 0,
     setPossibleChars: () => {},
+    startedTimer: false,
+    setStartedTimer: () => {},
+    startTimer: null,
+    setStartTimer: () => {},
+    endTimer: null,
+    setEndTimer: () => {},
 };
 
 
+/**
+ * Контекст для теста скорости печати пользователя.
+ * Этот контекст используется для предоставления значений и функций управления состоянием теста скорости печати пользователя компонентам приложения.
+ *
+ * @type {React.Context<TestContextType>}
+ */
 export const TestContext = createContext<TestContextType>(initialContextValue);

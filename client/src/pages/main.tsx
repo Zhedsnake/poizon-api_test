@@ -8,7 +8,15 @@ import Results from "../components/Results.tsx";
 import {getPossibleCharsLengths} from "../utils/getPossibleCharsLengths.ts";
 
 
-const Home: React.FC = () => {
+/**
+ * Главный компонент главной страницы приложения.
+ * Отвечает за отображение теста на скорость печати и управления состоянием теста.
+ *
+ * @component
+ * @returns {React.JSX.Element} - Возвращает JSX разметку для страницы теста на скорость печати.
+ */
+const Main: React.FC = () => {
+    // Деструктуризация значений и функций контекста теста
     const {
         done,
         setDone,
@@ -25,9 +33,12 @@ const Home: React.FC = () => {
         setStartTimer,
     } = useContext(TestContext);
 
+    // Данные из состояния Redux
     const {data: wordsData} = useTypedSelector(state => state.generateWords);
     const {data: inputWordsData} = useTypedSelector(state => state.inputWordsArray);
-    const {data: timeSecondData} = useTypedSelector(state => state.elapsedTime);
+    const {data: timeSecondData} = useTypedSelector(state => state.elapsedTime)
+
+    // Деструктуризация действий
     const {
         getWordsAction,
         defWordsAction,
@@ -36,7 +47,10 @@ const Home: React.FC = () => {
         getElapsedTimeTestAction
     } = useActions();
 
-    // Получает максимальное количество вводимых символов
+    /**
+     * Эффект для вычисления и установки максимального количества вводимых символов, которые сможет вводить пользователь.
+     * Срабатывает при изменении данных слов, предоставленных пользователю для ввода.
+     */
     useEffect(() => {
         if (wordsData && wordsData.length > 0) {
             const charsLength: number = getPossibleCharsLengths(wordsData);
@@ -44,7 +58,10 @@ const Home: React.FC = () => {
         }
     }, [wordsData]);
 
-    // Эффект на конец тестирования
+    /**
+     * Эффект для установки состояния завершенности теста и времени окончания теста скорости печати польхователя.
+     * Срабатывает при изменении значения `inputValue`, вводимых данных пользователем.
+     */
     useEffect(() => {
         if (possibleChars > 0 && inputValue.length === possibleChars) {
             setDone(true);
@@ -52,14 +69,20 @@ const Home: React.FC = () => {
         }
     }, [inputValue]);
 
-    // Эффект на подсчёт времени тестирования
+    /**
+     * Эффект для вычисления и сохранения времени теста скорости печати польхователя.
+     * Срабатывает при изменении состояния `done`.
+     */
     useEffect(() => {
         if (startTimer && endTimer) {
             getElapsedTimeTestAction(startTimer, endTimer);
         }
     }, [done]);
 
-    // Эффект на подсчёт слов в минуту тестирования
+    /**
+     * Эффект для вычисления и установки скорости слов в минуту.
+     * Срабатывает при изменении данных времени теста.
+     */
     useEffect(() => {
         if (timeSecondData){
             const wordsCount = wordsData.length;
@@ -68,7 +91,10 @@ const Home: React.FC = () => {
         }
     }, [timeSecondData]);
 
-    // Эффект на подсчёт ошибок
+    /**
+     * Эффект для подсчета количества ошибок в тесте, которые допустил пользователь.
+     * Срабатывает при изменении состояния `done`.
+     */
     useEffect(() => {
         if (startTimer && endTimer) {
             let count = 0;
@@ -87,6 +113,9 @@ const Home: React.FC = () => {
         }
     }, [done]);
 
+    /**
+     * Эффект для инициализации получения слов, предложенных пользователю для ввода, при монтировании компонента и очистки данных при размонтировании.
+     */
     useEffect(() => {
         getWordsAction();
 
@@ -136,4 +165,4 @@ const Home: React.FC = () => {
     );
 };
 
-export default Home;
+export default Main;

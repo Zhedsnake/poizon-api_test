@@ -1,5 +1,5 @@
 import React from "react";
-import Home from "../pages/home.tsx";
+import Main from "../pages/main.tsx";
 
 
 
@@ -25,10 +25,10 @@ export interface RoutesTypes {
  * Каждый маршрут представляет собой объект с путем и компонентом, который будет отображаться при переходе на этот путь.
  *
  * Пример:
- * - Путь `'/'` будет отображать компонент `<Home />`.
+ * - Путь `'/'` будет отображать компонент `<Main />`.
  */
 const publicRoutes: RoutesTypes[] = [
-    {path: '/', component: <Home />},
+    {path: '/', component: <Main />},
 ]
 
 export {publicRoutes};

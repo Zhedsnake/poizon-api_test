@@ -12,7 +12,7 @@ const RestartButton: React.FC = () => {
         setErrorCount
     } = useContext(TestContext);
 
-    const {getWordsAction, defElapsedTimeTest} = useActions()
+    const {getWordsAction, defElapsedTimeTestAction} = useActions()
 
     const handleRestart = () => {
         getWordsAction();
@@ -26,7 +26,7 @@ const RestartButton: React.FC = () => {
         setStartedTimer(false);
         setStartTimer(null);
         setEndTimer(null);
-        defElapsedTimeTest();
+        defElapsedTimeTestAction();
     }
 
     return (

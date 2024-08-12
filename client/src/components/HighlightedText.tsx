@@ -2,6 +2,22 @@ import React from 'react';
 import {useTypedSelector} from "../hooks/useTypedSelector.ts";
 
 
+/**
+ * Компонент для отображения текста с подсветкой введенных пользователем символов.
+ *
+ * @component
+ * @returns {React.JSX.Element} - Возвращает JSX разметку для отображения текста с подсветкой.
+ *
+ * @description
+ * `HighlightedText` отображает текст с подсветкой правильных и неправильных символов.
+ * Компонент использует данные из редукторов redux `generateWords` и `inputWordsArray` для отображения текста,
+ * где правильные символы имеют зеленый фон, неправильные - красный фон, а не введенные символы отображаются с прозрачным фоном.
+ *
+ * Цвет фона символов определяется следующим образом:
+ * - Правильные символы подсвечиваются зеленым (`#038723`).
+ * - Неправильные символы подсвечиваются красным (`lightcoral`).
+ * - Не введенные символы имеют прозрачный фон.
+ */
 const HighlightedText: React.FC = () => {
     const {data: wordsData} = useTypedSelector(state => state.generateWords)
     const {data: inputWordsData} = useTypedSelector(state => state.inputWordsArray)

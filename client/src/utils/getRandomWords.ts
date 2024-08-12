@@ -1,5 +1,10 @@
 import {allArrays} from "./words.ts";
 
+/**
+ * Генерирует массив из 20 случайных слов, выбранных из матрицы слов.
+ *
+ * @returns {string[]} - Массив из 20 случайных слов.
+ */
 export function getRandomWords(): string[] {
     const randomWords: string[] = [];
 

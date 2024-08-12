@@ -13,16 +13,27 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 // css
 import './css/body-backgrount.css';
 
+/**
+ * Главный компонент приложения, который инициализирует состояние контекста и оборачивает все компоненты 
+ * в провайдеры для контекста и Redux.
+ *
+ * @returns {React.JSX} - Возвращает корневой компонент приложения.
+ */
 const App: React.FC = () => {
+    // Состояние для отслеживания конца тестирования скорости печати пользователя
     const [done, setDone] = useState<boolean>(false);
 
+    // Состояния для вводимых строк пользователем и ограничения
     const [inputValue, setInputValue] = useState<string>('');
     const [possibleChars, setPossibleChars] = useState<number>(0)
 
+    // Состояние для скорости слов в минуту
     const [wpm, setWpm] = useState<number>(0);
 
+    // Состояние количества ошибок
     const [errorCount, setErrorCount] = useState<number>(0);
 
+    // Состояния для таймера
     const [startedTimer, setStartedTimer] = useState<boolean>(false);
     const [startTimer, setStartTimer] = useState<number | null>(null);
     const [endTimer, setEndTimer] = useState<number | null>(null);

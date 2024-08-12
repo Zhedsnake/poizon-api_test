@@ -1,17 +1,47 @@
-
-export interface InputWordsState {
+/**
+ * Интерфейс, представляющий состояние вводимых пользователем слов.
+ * @property {string[]} data - Массив строк, вводимых пользователем.
+ */
+export interface InputWordsArrayState {
     data: string[]
 }
 
-export enum InputWordsStateActionTypes {
-    INPUT_WORDS_SUCCESS = 'INPUT_WORDS_SUCCESS',
-    DEF_INPUT_WORDS='DEF_INPUT_WORDS',
+/**
+ * Перечисление типов действий для управления редьюсером redux.
+ * @readonly
+ * @enum {string}
+ */
+export enum InputWordsArrayActionTypes {
+    /** Действие для успешного сохранения введенных слов пользователем. */
+    INPUT_WORDS_ARRAY_SUCCESS = 'INPUT_WORDS_ARRAY_SUCCESS',
+
+    /** Действие для очистки слов пользователя. */
+    DEF_INPUT_WORDS_ARRAY='DEF_INPUT_WORDS_ARRAY',
 }
-interface InputWordsSuccessAction {
-    type: InputWordsStateActionTypes.INPUT_WORDS_SUCCESS;
+
+/**
+ * Интерфейс для действия успешного ввода слов.
+ * @interface
+ * @property {InputWordsArrayActionTypes.INPUT_WORDS_ARRAY_SUCCESS} type - Тип действия.
+ * @property {string[]} payload - Данные, передаваемые в состояние (массив введенных слов).
+ */
+interface InputWordsArraySuccessAction {
+    type: InputWordsArrayActionTypes.INPUT_WORDS_ARRAY_SUCCESS;
     payload: string[];
 }
-interface CleanInputWordsAction {
-    type: InputWordsStateActionTypes.DEF_INPUT_WORDS;
+
+/**
+ * Интерфейс для действия очистки введенных слов.
+ * @interface
+ * @property {InputWordsArrayActionTypes.DEF_INPUT_WORDS_ARRAY} type - Тип действия.
+ */
+interface CleanInputWordsArrayAction {
+    type: InputWordsArrayActionTypes.DEF_INPUT_WORDS_ARRAY;
 }
-export type InputWordsAction = InputWordsSuccessAction | CleanInputWordsAction
+
+
+/**
+ * Тип, объединяющий все возможные действия для управления редьюсером redux на вводимые слова пользователем.
+ * Может быть либо успешным вводом слов, либо очисткой введенных слов.
+ */
+export type InputWordsArrayAction = InputWordsArraySuccessAction | CleanInputWordsArrayAction
